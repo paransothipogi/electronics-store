@@ -1,0 +1,159 @@
+.card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--light-gray);
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+/* Variants */
+.default {
+  background: var(--white);
+}
+
+.elevated {
+  background: var(--white);
+  border: none;
+}
+
+.outlined {
+  background: var(--white);
+  border: 2px solid var(--light-gray);
+}
+
+.filled {
+  background: var(--pale-orange);
+  border: 1px solid var(--light-orange);
+}
+
+.gradient {
+  background: var(--gradient-subtle);
+  border: none;
+}
+
+/* Padding variants */
+.padding-none {
+  padding: 0;
+}
+
+.padding-small {
+  padding: var(--space-md);
+}
+
+.padding-medium {
+  padding: var(--space-lg);
+}
+
+.padding-large {
+  padding: var(--space-xl);
+}
+
+/* Shadow variants */
+.shadow-none {
+  box-shadow: none;
+}
+
+.shadow-small {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-medium {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-large {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Interactive states */
+.hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover:hover::before {
+  transform: scaleX(1);
+}
+
+.clickable {
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  width: 100%;
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+/* Card sections */
+.header {
+  padding: var(--space-lg) var(--space-lg) 0;
+  border-bottom: 1px solid var(--light-gray);
+  margin-bottom: var(--space-lg);
+}
+
+.body {
+  flex: 1;
+}
+
+.footer {
+  padding: 0 var(--space-lg) var(--space-lg);
+  border-top: 1px solid var(--light-gray);
+  margin-top: var(--space-lg);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .padding-small {
+    padding: var(--space-sm);
+  }
+  
+  .padding-medium {
+    padding: var(--space-md);
+  }
+  
+  .padding-large {
+    padding: var(--space-lg);
+  }
+  
+  .header,
+  .footer {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .hover {
+    transition: none;
+    transform: none;
+  }
+  
+  .card::before {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+}

@@ -1,0 +1,512 @@
+.card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--light-gray);
+  transition: all var(--transition-normal);
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--light-orange);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-normal);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Variants */
+.default {
+  /* Default styles already applied above */
+}
+
+.compact {
+  border-radius: var(--radius-lg);
+}
+
+.featured {
+  border: 2px solid var(--light-orange);
+  background: var(--gradient-subtle);
+}
+
+.featured::before {
+  height: 4px;
+}
+
+/* Stock Status */
+.out-of-stock {
+  opacity: 0.7;
+}
+
+.out-of-stock .productImage {
+  filter: grayscale(0.5);
+}
+
+.low-stock {
+  /* Styling for low stock items */
+}
+
+/* Image Container */
+.imageContainer {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--pale-orange);
+}
+
+.imageLink {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+}
+
+.imageWrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all var(--transition-normal);
+  opacity: 0;
+}
+
+.productImage.loaded {
+  opacity: 1;
+}
+
+.card:hover .productImage {
+  transform: scale(1.1);
+}
+
+.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light-gray);
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--light-gray);
+  border-top: 3px solid var(--primary-orange);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.noImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: var(--light-gray);
+  color: var(--warm-gray);
+  font-size: 0.9rem;
+}
+
+/* Image Indicators */
+.imageIndicators {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-xs);
+  z-index: 2;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.indicator.active,
+.indicator:hover {
+  background: var(--white);
+  transform: scale(1.2);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all var(--transition-normal);
+  z-index: 3;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.quickView {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--white);
+  color: var(--primary-orange);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quickView:hover {
+  background: var(--primary-orange);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+/* Badges */
+.badges {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  z-index: 2;
+}
+
+.discountBadge {
+  background: var(--gradient-primary);
+  color: var(--white);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-sm);
+}
+
+.stockBadge {
+  background: var(--error);
+  color: var(--white);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.low-stock .stockBadge {
+  background: var(--warning);
+}
+
+/* Wishlist Button */
+.wishlistButton {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  color: var(--warm-gray);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.wishlistButton:hover {
+  background: var(--white);
+  color: var(--primary-orange);
+  transform: scale(1.1);
+}
+
+.wishlistButton.active {
+  background: var(--primary-orange);
+  color: var(--white);
+}
+
+.wishlistButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Product Info */
+.productInfo {
+  padding: var(--space-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.brand {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category {
+  font-size: 0.75rem;
+  color: var(--warm-gray);
+  text-transform: capitalize;
+}
+
+.productName {
+  text-decoration: none;
+  color: inherit;
+}
+
+.productName h3 {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--charcoal);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--transition-fast);
+}
+
+.productName:hover h3 {
+  color: var(--primary-orange);
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  width: 12px;
+  height: 12px;
+  color: var(--light-gray);
+  fill: currentColor;
+}
+
+.star.filled {
+  color: var(--warning);
+}
+
+.ratingText {
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+}
+
+/* Price */
+.priceContainer {
+  margin: var(--space-sm) 0;
+}
+
+.priceWrapper {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.currentPrice {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-orange);
+}
+
+.originalPrice {
+  font-size: 0.9rem;
+  color: var(--warm-gray);
+  text-decoration: line-through;
+}
+
+.savings {
+  font-size: 0.8rem;
+  color: var(--success);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Actions */
+.actions {
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+.cartControls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.inCartText {
+  font-size: 0.85rem;
+  color: var(--success);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .productInfo {
+    padding: var(--space-md);
+  }
+  
+  .quickView span {
+    display: none;
+  }
+  
+  .quickView {
+    padding: var(--space-sm);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .wishlistButton {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .badges {
+    gap: 4px;
+  }
+  
+  .discountBadge,
+  .stockBadge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .productInfo {
+    padding: var(--space-sm);
+    gap: var(--space-xs);
+  }
+  
+  .currentPrice {
+    font-size: 1.1rem;
+  }
+  
+  .meta {
+    margin-bottom: 0;
+  }
+}
+
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .productImage,
+  .wishlistButton,
+  .quickView,
+  .overlay,
+  .card::before,
+  .indicator {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+  
+  .loadingSpinner {
+    animation: none;
+  }
+  
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  .discountBadge,
+  .stockBadge {
+    border: 1px solid var(--white);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .overlay,
+  .wishlistButton,
+  .quickView,
+  .actions {
+    display: none;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
